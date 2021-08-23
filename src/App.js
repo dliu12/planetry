@@ -8,17 +8,19 @@ function App() {
     const [formSubmit, setFormSubmit] = React.useState(false)
     const [imageSrc, setImageSrc] = React.useState()
 
-    function formAction(e) {
+    const formAction = e => {
         e.preventDefault()
         setFormSubmit(true)
     }
 
     React.useEffect(() => {
-        axios.get(`https://api.nasa.gov/planetary/apod?api_key=${KEY}`).then(res => {
-            setImageSrc(res.data.url)
-            console.log('called')
-        })
-        setFormSubmit(false)
+        if (formSubmit === true) {
+            axios.get(`https://api.nasa.gov/planetary/apod?api_key=${KEY}`).then(res => {
+                setImageSrc(res.data.url)
+                console.log('called')
+            })
+            setFormSubmit(false)
+        }
     }, [formSubmit])
 
     return (
