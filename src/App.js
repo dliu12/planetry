@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from './logo.svg'
+import './App.css'
+import axios from 'axios'
+import React from 'react'
+const KEY = 'ohg5Z0I2qocabN6TrIojwkyo48DXZa8B6e3aPsPX'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React, test
-        </a>
-      </header>
-    </div>
-  );
+    const [formSubmit, setFormSubmit] = React.useState(false)
+    const [imageSrc, setImageSrc] = React.useState()
+
+    function formAction(e) {
+        e.preventDefault()
+        setFormSubmit(true)
+    }
+
+    React.useEffect(() => {
+        axios.get(`https://api.nasa.gov/planetary/apod?api_key=${KEY}`).then(res => {
+            setImageSrc(res.data.url)
+            console.log('called')
+        })
+        setFormSubmit(false)
+    }, [formSubmit])
+
+    return (
+        <div className="App">
+            <form onSubmit={formAction}>
+                <button type="submit">Generate</button>
+            </form>
+            <div>
+                <img src={imageSrc} />
+            </div>
+        </div>
+    )
 }
 
-export default App;
+export default App
