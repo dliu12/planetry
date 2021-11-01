@@ -17,7 +17,7 @@ function App() {
     if (formSubmit === true) {
       axios
         .get(
-          `https: //api.nasa.gov/insight_weather/?api_key=${KEY}&feedtype=json&ver=1.0`
+          `https://api.nasa.gov/neo/rest/v1/feed?start_date=2021-10-31&end_date=2021-10-31&api_key=${KEY}`
         )
         .then((res) => {
           console.log(res);
